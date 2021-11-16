@@ -59,7 +59,10 @@ def translate_tencent(text):
 if __name__ == '__main__':
     window = tk.Tk()
     window.title('Translator')
-    # window.geometry('500x300')  
+    # window.geometry('500x300') 
+
+    # Window always on top
+    window.wm_attributes('-topmost', 1)  
     
     frm1 = tk.Frame(window)
     frm2 = tk.Frame(window)
