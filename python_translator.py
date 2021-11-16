@@ -20,7 +20,7 @@ def getText():
     w.OpenClipboard()
     d = w.GetClipboardData(win32con.CF_TEXT)
     w.CloseClipboard()
-    return d.decode('GBK').replace('\n', ' ')
+    return d.decode('GBK').replace('-\n', ' ').replace('\n', ' ')
 
 def setText(aString):
     w.OpenClipboard()
