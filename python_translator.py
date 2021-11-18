@@ -28,8 +28,8 @@ def setText(aString):
 
 # Tencent translate API (en-us -> zh-cn)
 def translate_tencent(text):
-    SecretId = "INPUT_YOUR_APPID"
-    SecretKey = "INPUT_YOUR_APPKEY"
+    SecretId = ""
+    SecretKey = ""
     try:
         cred = credential.Credential(SecretId, SecretKey)
         httpProfile = HttpProfile()
@@ -57,8 +57,8 @@ def translate_tencent(text):
 # Baidu translate API (en-us -> zh-cn)
 def translate_baidu(text):
     # Set your own appid/appkey.
-    appid = 'INPUT_YOUR_APPID'
-    appkey = 'INPUT_YOUR_APPKEY'
+    appid = ''
+    appkey = ''
 
     # For list of language codes, please refer to `https://api.fanyi.baidu.com/doc/21`
     from_lang = 'en'
@@ -87,7 +87,7 @@ def translate_baidu(text):
 
     # Show response
     result_text = result['trans_result'][0]['dst']
-    print(result_text)
+    # print(result_text)
     return result_text
 
 
@@ -96,27 +96,34 @@ def translate_baidu(text):
 if __name__ == '__main__':
     window = tk.Tk()
     window.title('Translator')
-    # window.geometry('500x300') 
+    # window.geometry('') 
 
     # Window always on top
     window.wm_attributes('-topmost', 1)  
     
     frm1 = tk.Frame(window)
-    frm2 = tk.Frame(window)
+    frm2 = tk.Frame(window, width=3)
 
-    var = tk.StringVar()    
-    l = tk.Label(frm1, textvariable=var, bg="white", width=40, height=3)
-    l.pack(side=tk.LEFT, fill="both", expand=True)
+    # Use tk.Text rather than tk.label
+    # # var = tk.StringVar()    
+    t = tk.Text(frm1, bg="white", width=50, height=4)
+    t.pack(side=tk.LEFT, fill="both", expand=True)
     
     def trans():
         text = getText()
-        print(text)
+        # print(text)
         text_transed = translate_baidu(text)
-        var.set(text_transed)
+        # Delete previous content
+        t.delete('1.0','end')
+        t.update()
+        t.insert('end', text_transed)
     
-    b = tk.Button(frm2, text='go', width=3, height=2, command=trans)
+    b = tk.Button(frm2, text='go', width=3, height=4, command=trans)
     b.pack(side=tk.RIGHT)
 
     frm1.pack(fill=tk.Y, side=tk.LEFT)
     frm2.pack(fill=tk.Y, side=tk.RIGHT)
+
+    # Prohibit changing window size
+    window.resizable(0,0)
     window.mainloop()
